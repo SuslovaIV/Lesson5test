@@ -1,5 +1,4 @@
 package Thread;
-
 public class MyThread_Task1 {
     public static void main(String[] args) {
         TestThread thread=new TestThread();
@@ -20,8 +19,8 @@ class TestThread{
             catch (InterruptedException e) {
             }
         }
-        // running1 = false; не понимаю, почему работает. переменнеы running1 running2 никогда не становятся true
-        // running2 = true;
+        running1 = true;
+        running2 = false;
         System.out.print("ABC");
         notify();
     }
@@ -33,8 +32,8 @@ class TestThread{
             catch (InterruptedException e) {
             }
         }
-        // running2 = true;
-        // running1 = false;
+        running2 = true;
+        running1 = false;
         System.out.print("ABC");
         notify();
     }
