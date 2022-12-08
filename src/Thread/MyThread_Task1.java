@@ -4,38 +4,49 @@ public class MyThread_Task1 {
         TestThread thread=new TestThread();
         Thread1 thread1 = new Thread1(thread);
         Thread2 thread2 = new Thread2(thread);
+        Thread3 thread3 = new Thread3(thread);
         new Thread(thread1).start();
         new Thread(thread2).start();
+        new Thread(thread3).start();
     }
 }
 class TestThread{
-    private boolean running1 = false;
-    private boolean running2 = false;
+    private int sleep = 1;
     public synchronized void action1() {
-        while (running1) {
+        while (sleep!=1) {
             try {
                 wait();
             }
             catch (InterruptedException e) {
             }
         }
-        running1 = true;
-        running2 = false;
-        System.out.print("ABC");
-        notify();
+        sleep=2;
+        System.out.print("A");
+        notifyAll();
     }
     public synchronized void action2() {
-        while (running2) {
+        while (sleep!=2) {
             try {
                 wait();
             }
             catch (InterruptedException e) {
             }
         }
-        running2 = true;
-        running1 = false;
-        System.out.print("ABC");
-        notify();
+        sleep=3;
+        System.out.print("B");
+        notifyAll();
+    }
+    public synchronized void action3() {
+        while (sleep!=3) {
+            try {
+                wait();
+            }
+            catch (InterruptedException e) {
+            }
+        }
+        sleep=1;
+        System.out.print("C");
+        notifyAll();
     }
 }
 class Thread1 implements Runnable{
@@ -57,6 +68,17 @@ class Thread2 implements Runnable{
     public void run(){
         for (int i = 1; i < 6; i++) {
             thread.action2();
+        }
+    }
+}
+class Thread3 implements Runnable{
+    TestThread thread;
+    Thread3(TestThread thread){
+        this.thread=thread;
+    }
+    public void run(){
+        for (int i = 1; i < 6; i++) {
+            thread.action3();
         }
     }
 }
